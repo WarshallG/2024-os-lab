@@ -49,13 +49,4 @@ archive:
 
 submit: archive
 
-handin:
-	curl -F "token=ESFD_asftB4PfgsXM3qqfw" -F "lab_num=3" -F "file=@life-parallel.c" http://114.212.81.7:9999/upload_code
-	
-report:
-	curl -F "token=ESFD_asftB4PfgsXM3qqfw" -F "lab_num=3" -F "file=@221300034.pdf" http://114.212.81.7:9999/upload_report
-
-score:
-	curl "http://114.212.81.7:9999/download?token=ESFD_asftB4PfgsXM3qqfw&lab_num=3"
-
 .PHONY: all clean archive submit
