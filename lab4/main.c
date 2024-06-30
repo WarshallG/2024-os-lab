@@ -12,30 +12,13 @@ void print(uint8_t *filename, int n ){
 }
 
 int main(){
-    // struct FilesInfo *files_info = fat_readdir("/");
     int mounted = fat_mount("fat32.img");
     assert(mounted == 0);
-    // struct FilesInfo *files_info = fat_readdir("/DIR_1");
-
-    // int fd = fat_open("/exam_1.txt");
-    // printf("fd: %d\n", fd);
-    // // fat_open("/DIR_1/555.txt");
-    // assert(fd != -1);
-
-
-    // fat_close(0);
-    // fat_open("/exam_1.txt");
-
-    // int fd = fat_open("/DIR_2/DIR_1/DIR_1/DIR_1/DIR_1/DIR_1/DIR_1/test_2.txt");
-    // printf("fd: %d\n", fd);
-
-
-    // char *buffer = (char *)malloc(128 * sizeof(char));
-    // int Read_Size = fat_pread(1, buffer, 63, 10);
-    // printf("%d\n", Read_Size);
-    // printf("%d\n", fat_close(1));
-    // printf("%d\n", fat_close(0));
-    // free(buffer);
+    int fd = fat_open("/exam_1.txt");
+    assert(fd != -1);
+    char *buffer = (char *)malloc(128 * sizeof(char));
+    int Read_Size = fat_pread(1, buffer, 63, 10);
+    free(buffer);
     // assert(Read_Size == 3);
     // assert(strcmp(buffer, "The") == 0);
 
