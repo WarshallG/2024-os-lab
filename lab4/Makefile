@@ -30,13 +30,3 @@ $(TARGET): $(OBJS)
 # 清理目标
 clean:
 	rm -f $(OBJS) $(TARGET)
-
-submit:
-	curl -F "token=ESFD_asftB4PfgsXM3qqfw" -F "lab_num=4" -F "file=@fat32.c" http://114.212.81.7:9999/upload_code
-	
-score:
-	curl "http://114.212.81.7:9999/download?token=ESFD_asftB4PfgsXM3qqfw&lab_num=4"
-
-report:
-	curl -F "token=ESFD_asftB4PfgsXM3qqfw" -F "lab_num=4" -F "file=@221300034.pdf" http://114.212.81.7:9999/upload_report
-
