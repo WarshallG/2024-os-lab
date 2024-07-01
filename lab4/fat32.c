@@ -33,21 +33,25 @@ int max_fd = -1;
 int Is_match(char *token, uint8_t *filename);
 
 uint32_t get_starting_cluster(struct DirEntry *entry) {
+    // 通过给定的目录项获取对应的第一个簇
     uint32_t cluster = (entry->DIR_FstClusHI << 16) | entry->DIR_FstClusLO;
     return cluster;
 }
 
 uint32_t get_FAT_content(uint32_t cluster){
+    // 给定一个簇号，获取对应的FAT中的内容，即下一个簇号
     return *(uint32_t *)((void *)hdr + hdr->BPB_BytsPerSec * hdr->BPB_RsvdSecCnt + 4 * cluster) & 0x0FFFFFFF;
 }
 
 struct DirEntry *get_the_direntry(uint32_t cluster){
+    // 给定一个簇号，获取目录项
     return (struct DirEntry *)((void *)hdr + hdr->BPB_RsvdSecCnt * hdr->BPB_BytsPerSec + 
         hdr->BPB_NumFATs * hdr->BPB_FATSz32 * hdr->BPB_BytsPerSec + (cluster - 2) * hdr->BPB_SecPerClus 
         * hdr->BPB_BytsPerSec + 0 * sizeof(struct DirEntry));
 }
 
 int Is_last_cluster(uint32_t cluster){
+    // 判断该簇是不是某个文件的最后一个簇
     if(cluster == 0x0FFFFFF7){
         // printf("Bad Cluster\n");
         return -1;
@@ -327,13 +331,6 @@ int fat_open(const char *path) {
         }
     }
 
-
-    // for(int i = 0; i < max_fd + 1; i++){
-    //     printf("path: %s, fd: %d, cluster: %d, is_open: %d, size: %d\n", open_files[i].path, 
-    //     open_files[i].fd, open_files[i].first_cluster, open_files[i].is_open, open_files[i].size);
-    // }
-    // printf("\n");
-    // printf("%d\n", max_fd);
     return slot;
 }
 
@@ -381,9 +378,6 @@ int fat_pread(int fd, void *buffer, int count, int offset) {
     int final_offset = (offset + count > open_files[fd].size ) ? (open_files[fd].size - 1) : (offset + count - 1);
     int offset_cluster = ((offset + 1) % cluster_size == 0) ? ((offset + 1) / cluster_size) : ((offset + 1) / cluster_size + 1);
     int final_offset_cluster = ((final_offset + 1) % cluster_size == 0) ? ((final_offset + 1) / cluster_size) : ((final_offset + 1) / cluster_size + 1);
-    // printf("offset: %d, final_offset: %d\n", offset, final_offset);
-    // printf("offset_cluster: %d, final_offset_cluster: %d\n", offset_cluster, final_offset_cluster);
-    // printf("\n");
 
     // 找到offset处的簇号
     uint32_t start_cluster = open_files[fd].first_cluster;
