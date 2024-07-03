@@ -50,7 +50,7 @@ struct DirEntry *get_the_direntry(uint32_t cluster)
 {
     // 给定一个簇号，获取目录项
     return (struct DirEntry *)((void *)hdr + hdr->BPB_RsvdSecCnt * hdr->BPB_BytsPerSec +
-                               hdr->BPB_NumFATs * hdr->BPB_FATSz32 * hdr->BPB_BytsPerSec + (cluster - 2) * hdr->BPB_SecPerClus * hdr->BPB_BytsPerSec + 0 * sizeof(struct DirEntry));
+                               hdr->BPB_NumFATs * hdr->BPB_FATSz32 * hdr->BPB_BytsPerSec + (cluster - 2) * hdr->BPB_SecPerClus * hdr->BPB_BytsPerSec);
 }
 
 int Is_last_cluster(uint32_t cluster)
